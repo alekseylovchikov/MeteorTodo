@@ -1,5 +1,4 @@
 Tasks = new Mongo.Collection('tasks');
-getC = "";
 
 if(Meteor.isClient) {
     Meteor.subscribe('tasks');

@@ -1,0 +1,16 @@
+.checked table tr td h3 {
+    color: #d1d1d1;
+    text-decoration: line-through;
+}
+
+.error {
+    display: none;
+}
+
+.task-text, .task-date, .task-category {
+    padding: 6px;
+}
+
+#input-task tr td {
+    padding: 4px;
+}

@@ -1,0 +1,111 @@
+<head>
+    <meta charset="utf-8" />
+    <title>Todo app</title>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.4/lumen/bootstrap.min.css" />
+</head>
+
+<body>
+    <div class="jumbotron">
+        <header class="text-center">
+            <h1>Менеджер задач</h1>
+        </header>
+    </div>
+
+    <div class="container">
+        {{#if currentUser}}
+            <label class="hide-completed">
+                <input type="checkbox" checked="{{hideCompleted}}" />
+                Скрыть законченные
+            </label>
+        {{/if}}
+
+        <table class="table table-responsive">
+            <tr>
+                {{#if currentUser}}
+                    <td><h1>Общее количество задач: {{incompleteCount}}</h1></td>
+                {{/if}}
+                {{#if currentUser}}
+                    <td align="right">Пользователь: {{> loginButtons}}</td>
+                {{else}}
+                    <td align="right">Войдите или зарегистрируйтесь: {{> loginButtons}}</td>
+                {{/if}}
+            </tr>
+        </table>
+
+        <section class="text-right">
+
+        </section>
+
+        {{#if currentUser}}
+            <section class="main-form">
+                <form id="add-new-user" class="add-new-user">
+                    <table class="table table-responsive" id="input-task">
+                        <tr>
+                            <td><input id="task" class="form-control" type="text" name="task" maxlength="60" placeholder="Ваша задача" /></td>
+                            <td style="width: 160px;">
+                                <select id="category" class="form-control">
+                                    <option value="Без категории">Без категории</option>
+                                    <option value="Дом">Дом</option>
+                                    <option value="Работа">Работа</option>
+                                    <option value="Развлечения">Развлечения</option>
+                                    <option value="Семья">Семья</option>
+                                    <option value="Друзья">Друзья</option>
+                                    <option value="Учеба">Учеба</option>
+                                </select>
+                            </td>
+                            <td><input class="btn btn-success" type="submit" value="Добавить задачу" /></td>
+                        </tr>
+                    </table>
+                </form>
+                <!--<form id="showCategory">
+                    <p>
+                        <select class="form-control" name="categoryShow" id="choiceCategory">
+                            <option id="all" value="Все">Все</option>
+                            <option id="none" value="Без категории">Без категории</option>
+                            <option id="house" value="Дом">Дом</option>
+                            <option id="work" value="Работа">Работа</option>
+                            <option id="fun" value="Развлечения">Развлечения</option>
+                            <option id="family" value="Родные">Родные</option>
+                            <option id="friends" value="Друзья">Друзья</option>
+                            <option id="learn" value="Учеба">Учеба</option>
+                        </select>
+                    </p>
+                </form>-->
+            </section>
+        {{/if}}
+
+        {{> tasks}}
+    </div>
+</body>
+
+<template name="tasks">
+    <div class="tasks">
+        <ul class="list-group">
+            {{#each users}}
+                <li class="{{#if checked}}checked{{/if}} list-group-item">
+                    <table class="table table-responsive table-condensed">
+                        <tr>
+                            <td>
+                                <div class="task-text"><span class="label label-primary">Задача:</span> <h3>{{task}}</h3></div>
+                                <div class="task-category"><span class="label label-success">Категория:</span> <h4>{{category}}</h4></div>
+                                <div class="task-date"><span class="label label-info">Дата создания:</span> <h4>{{udate.toLocaleString}}</h4></div>
+                            </td>
+                            <td align="right">
+                                <div class="btn-group" role="group" aria-label="Действия">
+                                    <button id="doing" type="button" class="btn {{#if checked}}btn-success{{else}}btn-default{{/if}}">{{#if checked}}Сделано{{else}}Активно{{/if}}</button>
+                                    <button type="button" class="btn btn-primary">Редактировать</button>
+                                    <button type="button" class="btn btn-danger delete">Удалить</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </li>
+            {{/each}}
+        </ul>
+        {{#if isEmpty}}
+            <p class="text-center"><button class="btn btn-danger delall">Удалить все законченные</button></p>
+        {{/if}}
+    </div>
+</template>
